@@ -33,7 +33,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": true,
+    "flexEnabled": false,
     "dependencies": {
       "minUI5Version": "1.127.1",
       "libs": {
@@ -44,7 +44,10 @@
         "sap.ui.comp": {},
         "sap.ui.generic.app": {},
         "sap.ui.table": {},
-        "sap.ushell": {}
+        "sap.ushell": {},
+        "sap.suite.ui.microchart": {},
+        "sap.suite.ui.commons": {}
+        
       }
     },
     "contentDensities": {
@@ -57,7 +60,16 @@
         "settings": {
           "bundleName": "com.isat.isatui5.i18n.i18n"
         }
+      },
+      "comboJsonModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "./model/ComboBox.json"
+      },
+      "dataJsonModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "./model/data.json"
       }
+
     },
     "resources": {
       "css": [
@@ -83,6 +95,13 @@
           "target": [
             "TargetDashboard"
           ]
+        },
+        {
+          "name": "RouteHomeScreen",
+          "pattern": "HomeScreen",
+          "target": [
+            "TargetHomeScreen"
+          ]
         }
       ],
       "targets": {
@@ -92,8 +111,17 @@
           "clearControlAggregation": false,
           "viewId": "Dashboard",
           "viewName": "Dashboard"
+        },
+        "TargetHomeScreen": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "HomeScreen",
+          "viewName": "HomeScreen"
         }
       }
+    
+      
     },
     "rootView": {
       "viewName": "com.isat.isatui5.view.App",

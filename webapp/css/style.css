@@ -1,1 +1,38 @@
 /* Enter your custom styles here */
+
+/* div#__hbox1 {
+    padding: 15px;
+} */
+
+.hbox{
+    gap:10px
+}
+.sapUiIcon::before {
+
+    
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+}
+
+.sapMTB.sapMTBStandard {
+    border-bottom: none !important
+}
+
+
+
+@media screen and (max-width: 600px) {
+    .hbox {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .sapMComboBox {
+        width: 100% !important;
+    }
+
+    .sapMButton {
+        width: 100% !important;
+    }
+}
+
