@@ -1,7 +1,308 @@
-<mvc:View controllerName="com.isat.isatui5.controller.Dashboard"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-        <content />
+<mvc:View
+    controllerName="com.isat.isatui5.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:unified="sap.ui.unified"
+>
+    <Page>
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <ObjectHeader
+                    title="Integrations Support Automation Toolkit"
+                    backgroundDesign="Solid"
+                    responsive="true"
+                >
+                    <attributes>
+                        <ObjectAttribute
+                            text="One Stop dashboard for all Projects and Interfaces"
+                        />
+                    </attributes>
+                </ObjectHeader>
+                <Text
+                    text="Welcome User :)"
+                    class="welcome"
+                />
+            </VBox>
+            <l:Grid
+                defaultSpan="XL12 L12 M12 S12"
+                class="dashboardGrid"
+            >
+                <l:content>
+                    <!-- Top row: Scenarios by Release, Scenarios by Portfolios, Calendar -->
+                    <FlexBox
+                        justifyContent="SpaceBetween"
+                        alignItems="Start"
+                        class="topRow"
+                    >
+                        <!-- Scenarios by Release Chart -->
+                        <VBox class="chartBox">
+                        <Toolbar >
+                            <Title
+                                text="Scenarios by Release"
+                                level="H2"
+                            />
+                            </Toolbar>
+                            <viz:VizFrame
+                                id="idScenariosReleaseChart"
+                                height="300px"
+                                width="100%"
+                                vizType="column"
+                            >
+                                <viz:dataset>
+                                    <viz.data:FlattenedDataset
+                                        data="{viewModel>/scenariosByRelease}"
+                                    >
+                                        <viz.data:dimensions>
+                                            <viz.data:DimensionDefinition
+                                                name="Release"
+                                                value="{release}"
+                                            />
+                                        </viz.data:dimensions>
+                                        <viz.data:measures>
+                                            <viz.data:MeasureDefinition
+                                                name="Count"
+                                                value="{count}"
+                                            />
+                                        </viz.data:measures>
+                                    </viz.data:FlattenedDataset>
+                                </viz:dataset>
+                                <viz:feeds>
+                                    <viz.feeds:FeedItem
+                                        uid="valueAxis"
+                                        type="Measure"
+                                        values="Count"
+                                    />
+                                    <viz.feeds:FeedItem
+                                        uid="categoryAxis"
+                                        type="Dimension"
+                                        values="Release"
+                                    />
+                                </viz:feeds>
+                            </viz:VizFrame>
+                        </VBox>
+
+                        <!-- Scenarios by Portfolios Chart -->
+                        <VBox class="chartBox">
+                            <FlexBox
+                                justifyContent="SpaceBetween"
+                                alignItems="Center"
+                            >
+                                <Title
+                                    text="Scenarios by Portfolios"
+                                    level="H2"
+                                />
+                                <Select
+                                    id="portfolioFilter"
+                                    change="onPortfolioFilterChange"
+                                    items="{
+                                            path: 'viewModel>/portfolios',
+                                            sorter: { path: 'text' }
+                                        }"
+                                >
+                                    <core:Item
+                                        key="{viewModel>key}"
+                                        text="{viewModel>text}"
+                                    />
+                                </Select>
+                            </FlexBox>
+                            <viz:VizFrame
+                                id="idScenariosPortfoliosChart"
+                                height="300px"
+                                width="100%"
+                                vizType="column"
+                            >
+                                <viz:dataset>
+                                    <viz.data:FlattenedDataset
+                                        data="{viewModel>/scenariosByPortfolios}"
+                                    >
+                                        <viz.data:dimensions>
+                                            <viz.data:DimensionDefinition
+                                                name="Portfolio"
+                                                value="{portfolio}"
+                                            />
+                                        </viz.data:dimensions>
+                                        <viz.data:measures>
+                                            <viz.data:MeasureDefinition
+                                                name="Count"
+                                                value="{count}"
+                                            />
+                                        </viz.data:measures>
+                                    </viz.data:FlattenedDataset>
+                                </viz:dataset>
+                                <viz:feeds>
+                                    <viz.feeds:FeedItem
+                                        uid="valueAxis"
+                                        type="Measure"
+                                        values="Count"
+                                    />
+                                    <viz.feeds:FeedItem
+                                        uid="categoryAxis"
+                                        type="Dimension"
+                                        values="Portfolio"
+                                    />
+                                </viz:feeds>
+                            </viz:VizFrame>
+                        </VBox>
+
+                        <!-- Calendar -->
+                        <VBox class="calendarBox">
+                            <FlexBox
+                                justifyContent="SpaceBetween"
+                                alignItems="Center"
+                            >
+                                <Title
+                                    text="Calendar"
+                                    level="H2"
+                                />
+                                <Button
+                                    icon="sap-icon://refresh"
+                                    press="onRefreshCalendar"
+                                    tooltip="Refresh Calendar"
+                                />
+                            </FlexBox>
+                            <unified:Calendar
+                                id="calendar"
+                                intervalSelection="false"
+                                singleSelection="true"
+                                months="1"
+                            />
+                        </VBox>
+                    </FlexBox>
+
+                    <!-- Bottom row: Scenarios by Initiative, Action Tiles -->
+                    <FlexBox
+                        justifyContent="SpaceBetween"
+                        alignItems="Start"
+                        class="bottomRow"
+                    >
+                        <!-- Scenarios by Initiative Chart -->
+                        <VBox class="chartBox initiativeChart">
+                            <FlexBox
+                                justifyContent="SpaceBetween"
+                                alignItems="Center"
+                            >
+                                <Title
+                                    text="Scenarios by Initiative"
+                                    level="H2"
+                                />
+                                <Select
+                                    id="initiativeFilter"
+                                    change="onInitiativeFilterChange"
+                                    items="{
+                                            path: 'viewModel>/initiatives',
+                                            sorter: { path: 'text' }
+                                        }"
+                                >
+                                    <core:Item
+                                        key="{viewModel>key}"
+                                        text="{viewModel>text}"
+                                    />
+                                </Select>
+                            </FlexBox>
+                            
+                            <viz:VizFrame
+                                id="idScenariosInitiativeChart"
+                                height="300px"
+                                width="67%"
+                                vizType="donut"
+                            >
+                                <viz:dataset>
+                                    <viz.data:FlattenedDataset
+                                        data="{viewModel>/scenariosByInitiative}"
+                                    >
+                                        <viz.data:dimensions>
+                                            <viz.data:DimensionDefinition
+                                                name="Initiative"
+                                                value="{initiative}"
+                                            />
+                                        </viz.data:dimensions>
+                                        <viz.data:measures>
+                                            <viz.data:MeasureDefinition
+                                                name="Percentage"
+                                                value="{percentage}"
+                                            />
+                                        </viz.data:measures>
+                                    </viz.data:FlattenedDataset>
+                                </viz:dataset>
+                                <viz:feeds>
+                                    <viz.feeds:FeedItem
+                                        uid="size"
+                                        type="Measure"
+                                        values="Percentage"
+                                    />
+                                    <viz.feeds:FeedItem
+                                        uid="color"
+                                        type="Dimension"
+                                        values="Initiative"
+                                    />
+                                </viz:feeds>
+                            </viz:VizFrame>
+                        </VBox>
+
+                        <!-- Action Tiles -->
+                        <FlexBox
+                            wrap="Wrap"
+                            class="tileContainer"
+                        >
+                            <VBox>
+                                <HBox>
+                                    <GenericTile
+                                        class="sapUiTinyMarginEnd sapUiTinyMarginBottom tileSize"
+                                        header="Nominate Scenario"
+                                        press="onPressNominateScenario"
+                                    >
+                                        <TileContent>
+                                            <ImageContent
+                                                src="sap-icon://add-document"
+                                            />
+                                        </TileContent>
+                                    </GenericTile>
+                                    <GenericTile
+                                        class="sapUiTinyMarginEnd sapUiTinyMarginBottom tileSize"
+                                        header="Partner Demo Library"
+                                        press="onPressPartnerDemoLibrary"
+                                    >
+                                        <TileContent>
+                                            <ImageContent
+                                                src="sap-icon://library"
+                                            />
+                                        </TileContent>
+                                    </GenericTile>
+                                </HBox>
+                                <HBox>
+                                    <GenericTile
+                                        class="sapUiTinyMarginEnd sapUiTinyMarginBottom tileSize"
+                                        header="Partner Edge Portal"
+                                        press="onPressPartnerEdgePortal"
+                                    >
+                                        <TileContent>
+                                            <ImageContent
+                                                src="sap-icon://customer-and-supplier"
+                                            />
+                                        </TileContent>
+                                    </GenericTile>
+                                    <GenericTile
+                                        class="sapUiTinyMarginEnd sapUiTinyMarginBottom tileSize"
+                                        header="Overview of Partner Demo Environment"
+                                        press="onPressOverviewPartnerDemoEnvironment"
+                                    >
+                                        <TileContent>
+                                            <ImageContent
+                                                src="sap-icon://overview-chart"
+                                            />
+                                        </TileContent>
+                                    </GenericTile>
+                                </HBox>
+                            </VBox>
+                        </FlexBox>
+                    </FlexBox>
+                </l:content>
+            </l:Grid>
+        </content>
     </Page>
 </mvc:View>

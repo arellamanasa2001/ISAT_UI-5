@@ -7,6 +7,8 @@ sap.ui.define(
   
       return BaseController.extend("com.isat.isatui5.controller.App", {
         onInit: function() {
+
+          
         }
       });
     }

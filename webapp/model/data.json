@@ -1,0 +1,21 @@
+{
+	"projects": [
+	  {
+		"projectName": "Project A",
+		"customer": "Customer A",
+		"interfaces": [
+		  { "name": "Interface 1", "count": 10 },
+		  { "name": "Interface 2", "count": 5 }
+		]
+	  },
+	  {
+		"projectName": "Project B",
+		"customer": "Customer B",
+		"interfaces": [
+		  { "name": "Interface 3", "count": 7 },
+		  { "name": "Interface 4", "count": 4 }
+		]
+	  }
+	]
+  }
+  
