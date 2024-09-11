@@ -1,3 +1,4 @@
+ 
 <mvc:View
     controllerName="com.isat.isatui5.controller.Dashboard"
     xmlns:mvc="sap.ui.core.mvc"
@@ -27,7 +28,14 @@
                     text="Welcome User :)"
                     class="welcome"
                 />
+                 <ToolbarSpacer />
+            <Button text="HomeScreen" press="onClick"></Button>
+           
             </VBox>
+                   
+           
+ 
+   
             <l:Grid
                 defaultSpan="XL12 L12 M12 S12"
                 class="dashboardGrid"
@@ -85,7 +93,7 @@
                                 </viz:feeds>
                             </viz:VizFrame>
                         </VBox>
-
+ 
                         <!-- Scenarios by Portfolios Chart -->
                         <VBox class="chartBox">
                             <FlexBox
@@ -148,7 +156,7 @@
                                 </viz:feeds>
                             </viz:VizFrame>
                         </VBox>
-
+ 
                         <!-- Calendar -->
                         <VBox class="calendarBox">
                             <FlexBox
@@ -173,7 +181,7 @@
                             />
                         </VBox>
                     </FlexBox>
-
+ 
                     <!-- Bottom row: Scenarios by Initiative, Action Tiles -->
                     <FlexBox
                         justifyContent="SpaceBetween"
@@ -204,7 +212,7 @@
                                     />
                                 </Select>
                             </FlexBox>
-                            
+                           
                             <viz:VizFrame
                                 id="idScenariosInitiativeChart"
                                 height="300px"
@@ -243,7 +251,7 @@
                                 </viz:feeds>
                             </viz:VizFrame>
                         </VBox>
-
+ 
                         <!-- Action Tiles -->
                         <FlexBox
                             wrap="Wrap"
@@ -304,5 +312,8 @@
                 </l:content>
             </l:Grid>
         </content>
-    </Page>
-</mvc:View>
+            </Page>
+            </mvc:View>
+ 
+ 
+ 

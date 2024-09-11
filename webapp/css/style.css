@@ -1,67 +1,110 @@
+ 
 .dashboardGrid {
     height: 100%;
  }
 .data{
     display: flex !important;
 }
-
+ 
 .topRow, .bottomRow {
     width: 100%;
     margin-bottom: 2rem;
 }
-
+ 
 .chartBox {
     width: 30%;
     min-width: 300px;
 }
-
+ 
 .calendarBox {
     width: 30%;
     min-width: 300px;
 }
-
+ 
 .initiativeChart {
     width: 45%;
 }
-
+ 
 .tileContainer {
     width: 50%;
     justify-content: flex-end;
 }
-
+ 
 .tileSize {
     width: 10rem;
     height: 10rem;
 }
-
+ 
 /* Adjust the Select control to be smaller and align with the title */
  .sapMSlt {
     max-width: 150px;
     margin-left: 1rem;
-} 
-
+}
+ 
 /* Make the calendar more compact */
  .sapUiCal {
     padding: 0.5rem;
-} 
-
+}
+ 
  @media (max-width: 1200px) {
     .topRow, .bottomRow {
         flex-direction: column;
     }
-
+ 
     .chartBox, .calendarBox, .initiativeChart, .tileContainer {
         width: 100%;
         margin-bottom: 1rem;
     }
 }
-
+ 
 .welcome{
     margin-top: 10px;
     margin-left: 10px;
     margin-bottom: 10px;
 }  
-
+ 
 .data{
     display: flex !important;
 }
+ 
+/* Enter your custom styles here */
+ 
+/* div#__hbox1 {
+    padding: 15px;
+} */
+ 
+.hbox{
+    gap:10px
+}
+.sapUiIcon::before {
+ 
+   
+    font-weight: normal;
+    -webkit-font-smoothing: antialiased;
+}
+ 
+.sapMTB.sapMTBStandard {
+    border-bottom: none !important
+}
+ 
+ 
+ 
+@media screen and (max-width: 600px) {
+    .hbox {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+ 
+    .sapMComboBox {
+        width: 100% !important;
+    }
+ 
+    .sapMButton {
+        width: 100% !important;
+    }
+}
+ 
+ 
+ 
+ 

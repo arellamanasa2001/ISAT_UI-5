@@ -5,43 +5,43 @@
 //   "sap/ui/model/FilterOperator"
 // ], function (Controller, JSONModel, Filter, FilterOperator) {
 //   "use strict";
-
+ 
 //   return Controller.extend("com.isat.isatui5.controller.Dashboard", {
 //       onInit: function () {
           // Set up the JSON model
           // var oModel = new JSONModel(sap.ui.require.toUrl("com/isat/isatui5/model/data.json"));
           // this.getView().setModel(oModel, "projectData");
-
+ 
           // // Set default filter for all projects
           // this._applyProjectFilter();
       //},
-
+ 
       // // Event handler for the project filter
       // onProjectFilter: function (oEvent) {
       //     var sSelectedProject = oEvent.getSource().getSelectedKey();
-
+ 
       //     // Apply filter based on project selection
       //     this._applyProjectFilter(sSelectedProject);
       // },
-
+ 
       // // Apply filter logic
       // _applyProjectFilter: function (sProject) {
       //     var oCard = this.getView().byId("barChartCard"); // Assuming the card ID
       //     var aFilters = [];
-
+ 
       //     if (sProject) {
       //         aFilters.push(new Filter("projectName", FilterOperator.EQ, sProject));
       //     }
-
+ 
       //     var oBinding = oCard.getBinding("items");
       //     oBinding.filter(aFilters);
       // }
 //   });
 // });
-
-
-
-
+ 
+ 
+ 
+ 
 // sap.ui.define([
 //   "sap/ui/core/mvc/Controller",
 //   "sap/ui/model/json/JSONModel",
@@ -49,7 +49,7 @@
 //   "sap/viz/ui5/data/FlattenedDataset"
 // ], function (Controller, JSONModel, FeedItem, FlattenedDataset) {
 //   "use strict";
-
+ 
 //   return Controller.extend("project1.controller.View1", {
 //       onInit: function () {
 //           // Load JSON Data (you can replace this with your OData service as needed)
@@ -77,15 +77,15 @@
 //                   { initiative: "Others", percentage: 15.3 }
 //               ]
 //           };
-
+ 
 //           // Create a JSONModel and set the data
 //           var oModel = new JSONModel(oData);
 //           this.getView().setModel(oModel);
-
+ 
 //           // Call method to bind the charts
 //           this._bindCharts();
 //       },
-
+ 
 //       _bindCharts: function () {
 //           // Bind data for Scenarios by Release (Bar Chart)
 //           var oVizFrameRelease = this.getView().byId("barChartRelease");
@@ -104,21 +104,21 @@
 //           });
 //           oVizFrameRelease.setDataset(oDatasetRelease);
 //           oVizFrameRelease.setModel(this.getView().getModel());
-
+ 
 //           oVizFrameRelease.addFeed(new FeedItem({
 //               uid: "valueAxis",
 //               type: "Measure",
 //               values: ["Count"]
 //           }));
-
+ 
 //           oVizFrameRelease.addFeed(new FeedItem({
 //               uid: "categoryAxis",
 //               type: "Dimension",
 //               values: ["Phase"]
 //           }));
-
-
-
+ 
+ 
+ 
 //            // Bind data for Scenarios by Portfolio (Bar Chart)
 //           var oVizFramePortfolio = this.getView().byId("barChartPortfolio");
 //           var oDatasetPortfolio = new FlattenedDataset({
@@ -136,22 +136,22 @@
 //           });
 //           oVizFramePortfolio.setDataset(oDatasetPortfolio);
 //           oVizFramePortfolio.setModel(this.getView().getModel());
-
+ 
 //           oVizFramePortfolio.addFeed(new FeedItem({
 //               uid: "valueAxis",
 //               type: "Measure",
 //               values: ["Count"]
 //           }));
-
+ 
 //           oVizFramePortfolio.addFeed(new FeedItem({
 //               uid: "categoryAxis",
 //               type: "Dimension",
 //               values: ["Portfolio"]
 //           }));
-
-
-
-          
+ 
+ 
+ 
+         
 //            // Bind data for Scenarios by Initiative (Pie Chart)
 //           var oVizFrameInitiative = this.getView().byId("pieChartInitiative");
 //           var oDatasetInitiative = new FlattenedDataset({
@@ -169,13 +169,13 @@
 //           });
 //           oVizFrameInitiative.setDataset(oDatasetInitiative);
 //           oVizFrameInitiative.setModel(this.getView().getModel());
-
+ 
 //           oVizFrameInitiative.addFeed(new FeedItem({
 //               uid: "size",
 //               type: "Measure",
 //               values: ["Percentage"]
 //           }));
-
+ 
 //           oVizFrameInitiative.addFeed(new FeedItem({
 //               uid: "color",
 //               type: "Dimension",
@@ -184,17 +184,18 @@
 //       }
 //   });
 // });
-
-
+ 
+ 
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/json/JSONModel",
     "sap/m/MessageToast"
 ], function (Controller, JSONModel, MessageToast) {
     "use strict";
-
+ 
     return Controller.extend("com.isat.isatui5.controller.Dashboard", {
         onInit: function () {
+ 
             // Set up view model
             var oViewModel = new JSONModel({
                 userName: "Venkata Narasimha Raju",
@@ -244,7 +245,7 @@ sap.ui.define([
                 ]
             });
             this.getView().setModel(oViewModel, "viewModel");
-
+ 
             // Set up calendar model
             var oCalendarModel = new JSONModel({
                 startDate: new Date(2024, 8, 1), // September 1, 2024
@@ -260,11 +261,11 @@ sap.ui.define([
             });
             this.getView().setModel(oCalendarModel, "calendar");
         },
-
+ 
         onAfterRendering: function() {
             this._setChartProperties();
         },
-
+ 
         _setChartProperties: function() {
             var chartProperties = {
                 plotArea: {
@@ -287,10 +288,10 @@ sap.ui.define([
                     visible: false
                 }
             };
-
+ 
             this.getView().byId("idScenariosReleaseChart").setVizProperties(chartProperties);
             this.getView().byId("idScenariosPortfoliosChart").setVizProperties(chartProperties);
-            
+           
             var donutChartProperties = {
                 plotArea: {
                     dataLabel: {
@@ -309,7 +310,11 @@ sap.ui.define([
             };
             this.getView().byId("idScenariosInitiativeChart").setVizProperties(donutChartProperties);
         },
+        onClick:function(){
+            var Route = this.getOwnerComponent().getRouter();
+            Route.navTo("RouteHomeScreen")
+        },
 
-        // ... (rest of the controller methods remain the same)
     });
 });
+ 

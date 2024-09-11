@@ -1,0 +1,466 @@
+
+
+<mvc:View
+    controllerName="com.isat.isatui5.controller.HomeScreen"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core"
+    displayBlock="true"
+    xmlns="sap.m"
+    xmlns:tnt="sap.tnt"
+    xmlns:f="sap.f"
+    xmlns:uxap="sap.uxap"
+    xmlns:m="sap.m"
+
+    
+    xmlns:form="sap.ui.layout.form"
+    	xmlns:c="sap.suite.ui.commons"
+>
+
+  <Page>
+        <uxap:ObjectPageLayout height="20%">
+    <uxap:headerTitle>
+        <uxap:ObjectPageDynamicHeaderTitle>
+            <uxap:expandedHeading>
+                  <Toolbar>
+                              <Button icon="sap-icon://home" press="backToDashBoard"/>
+                             <Label text="Release Name" />
+
+                                <MultiComboBox
+                                    selectionChange="handleSelectionChange"
+                                    selectionFinish="handleSelectionFinish"
+                                    placeholder="All"
+                                    showSelectAll="true"
+                                    width="200px"
+                                    items="{
+				path: 'comboJsonModel>/ProductCollection',
+				 sorter: { path: 'Name' }
+                                           
+				
+			}"
+                                >
+                                    <core:Item
+                                        key="{comboJsonModel>ProductId}"
+                                        text="{comboJsonModel>Name}{comboJsonModel>ProductId}"
+                                    />
+                                </MultiComboBox>
+                  </Toolbar>
+            </uxap:expandedHeading>
+            <uxap:expandedContent>
+                <m:Text text="List of Scenarios (220)" />
+            </uxap:expandedContent>
+           
+            <uxap:actions>
+                <m:Button  text="New"  press="onAddButtonPress" />
+                <m:Button type="Transparent" text="Import" />
+                <m:Button type="Transparent" text="Export" />
+                
+            </uxap:actions>
+        </uxap:ObjectPageDynamicHeaderTitle>
+    </uxap:headerTitle>
+</uxap:ObjectPageLayout>
+
+
+
+
+       <f:FlexibleColumnLayout id="flexibleColumnLayout">
+        <f:beginColumnPages>
+            <!--  <f:content>  -->
+            <!--  DynamicPage Content  -->
+            <!--  Table in the initial content  -->
+
+            
+            <Page>
+                
+               <tnt:ToolHeader id="shellLikeToolHeader" class="sapUiTinyMargin">
+			<SearchField width="16rem" id="searchField" placeholder="Search Scenario ID/ Description/ Portfolio">
+				<layoutData>
+					<OverflowToolbarLayoutData priority="NeverOverflow" group="1"/>
+				</layoutData>
+			</SearchField>
+
+            
+						<ToolbarSpacer />
+			<Button text="Go"></Button>
+            <Button text="Show Filter Bar"></Button>
+            <Button text="Restore"></Button>
+
+			<Button text="Filters" type="Transparent" tooltip="Notification">
+				
+			</Button>
+			
+		</tnt:ToolHeader>
+
+                <Table
+                    id="existingLeadsTable"
+                    inset="false"
+                    items="{jsonModel>/leadData}"
+                    class="sapFDynamicPageAlignContent"
+                    width="auto"
+                    
+                >
+                    <columns>
+                        <Column
+                            minScreenWidth="Tablet"
+                            demandPopin="true"
+                        >
+                            <Text text="Scenario ID/ Description" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            hAlign="Center"
+                        >
+                            <Text text="Portfolio" />
+                        </Column>
+                        <Column
+                            minScreenWidth="Desktop"
+                            demandPopin="true"
+                            hAlign="Center"
+                        >
+                            <Text text="Issues" />
+                        </Column>
+                        <Column
+                            hAlign="Center"
+                            visible="true"
+                        >
+                            <Text text="Actions" />
+                        </Column>
+                        
+                    </columns>
+                    <items>
+                        <ColumnListItem
+                            type="Navigation"
+                            press="onListItemPress"
+                        >
+                            <cells>
+                                <ObjectIdentifier title="{jsonModel>scenario Id}" text="{jsonModel>description}"/>
+                                
+             
+
+                                                    	
+                                  
+                                <ObjectIdentifier
+                                    text="{jsonModel>portfolio}"
+                                />
+                                <ObjectIdentifier text="{jsonModel>issues}" />
+                               
+                                <Button type="Emphasized" icon="sap-icon://display"></Button>
+                                
+                                
+                               
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </Page>
+
+            <!--  </f:DynamicPage>  -->
+            <!--  </f:content>  -->
+        </f:beginColumnPages>
+        <f:midColumnPages>
+            <Page>
+                <uxap:ObjectPageLayout
+                    id="ObjectPageLayout"
+                    showTitleInHeaderContent="true"
+                    alwaysShowContentHeader="false"
+                    preserveHeaderStateOnScroll="false"
+                    headerContentPinnable="true"
+                    isChildPage="true"
+                    upperCaseAnchorBar="false"
+                >
+                    <uxap:headerTitle>
+                        <uxap:ObjectPageDynamicHeaderTitle>
+                            <uxap:expandedHeading>
+                                <Title
+                                    text="{name}"
+                                    wrapping="true"
+                                    class="sapUiSmallMarginEnd"
+                                />
+                            </uxap:expandedHeading>
+                            <uxap:navigationActions>
+                                <OverflowToolbarButton
+                                    type="Transparent"
+                                    icon="sap-icon://full-screen"
+                                    press="handleFullScreen"
+                                    id="enterFullScreenBtn"
+                                    tooltip="Enter Full Screen Mode"
+                                    visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }"
+                                />
+                                <OverflowToolbarButton
+                                    type="Transparent"
+                                    icon="sap-icon://exit-full-screen"
+                                    press="handleExitFullScreen"
+                                    id="exitFullScreenBtn"
+                                    tooltip="Exit Full Screen Mode"
+                                    visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }"
+                                />
+                                <OverflowToolbarButton
+                                    type="Transparent"
+                                    icon="sap-icon://decline"
+                                    press="handleClose"
+                                    tooltip="Close middle column"
+                                    visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }"
+                                />
+                            </uxap:navigationActions>
+                        </uxap:ObjectPageDynamicHeaderTitle>
+                    </uxap:headerTitle>
+                    <uxap:sections>
+                        <uxap:ObjectPageSection title="MORE INFO">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                    <uxap:blocks>
+                                        <Wizard
+        id="CreateProductWizard"
+        finishButtonText="Finish"
+        currentStep="PricingStep"
+        class="sapUiResponsivePadding--header sapUiResponsivePadding--content"
+        height="70%">
+        <WizardStep id="ProductTypeStep"
+                    title="Test Scenario Details"
+                    activate="onActivate">
+                          <Button text="ThirdPage" press="ItemPress"></Button>
+        </WizardStep>
+        <WizardStep id="ProductInfoStep"
+                    title="Select ICO"
+                    activate="onActivate">
+            <!-- <MessageStrip class="sapUiSmallMarginBottom"
+                    text="Validation in the wizard is controlled by calling the validateStep(Step) and invalidateStep(Step) methods "
+                    showIcon="true"/>
+            <Text text="Cras tellus leo, volutpat vitae ullamcorper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien et viverra imperdiet, orci erat porttitor nulla, eget commodo metus nibh nec ipsum. Aliquam lacinia euismod metus, sollicitudin pellentesque purus volutpat eget. Pellentesque egestas erat quis eros convallis mattis. Mauris hendrerit sapien a malesu corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien  "/>
+            <form:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout">
+                <Label text="Name" required="true"/>
+                <Input valueStateText="Enter 6 symbols or more"
+                        valueState="{/productNameState}" id="ProductName"
+                        change="validateProdInfoStep"
+                        placeholder="Enter name with length greater than 6" value="{/productName}"/>
+                <Label text="Weight" required="true"/>
+                <Input valueStateText="Enter digits"
+                        valueState="{/productWeightState}" id="ProductWeight"
+                        change="validateProdInfoStep"
+                        type="Number" placeholder="Enter digits"
+                        value="{/productWeight}"/>
+                <Label text="Manufacturer"/>
+                <Select selectedKey="{/productManufacturer}">
+                    <core:Item key="Apple" text="Apple"/>
+                    <core:Item key="Microsoft" text="Microsoft"/>
+                    <core:Item key="Google" text="Google"/>
+                    <core:Item key="Sony" text="Sony"/>
+                    <core:Item key="Samsung" text="Samsung"/>
+                    <core:Item key="Logitech" text="Logitech"/>
+                </Select>
+                <Label text="Description"/>
+                <TextArea value="{/productDescription}" rows="8"/>
+            </form:SimpleForm> -->
+        </WizardStep>
+        <WizardStep id="OptionalInfoStep"
+                    optional="false"
+                    title="Select Messages"
+                    activate="onActivate">
+            <!-- <MessageStrip class="sapUiSmallMarginBottom"
+                    text="You can validate steps by default with the validated='true' property of the step. The next button is always enabled."
+                    showIcon="true"/>
+            <Text text="Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec ppellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien corper eu, posuere malesuada nisl. Integer pellentesque leo sit amet dui vehicula, quis ullamcorper est pulvinar. Nam in libero sem. Suspendisse arcu metus, molestie a turpis a, molestie aliquet dui. Donec pulvinar, sapien  "/>
+            <form:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout">
+                <Label text="Cover photo"/>
+                <u:FileUploader
+                        width="400px"
+                        tooltip="Upload product cover photo to the local server"
+                        style="Emphasized"
+                        placeholder="Choose a file for Upload..."/>
+                <Label text="Manufacturing date"/>
+                <DatePicker
+                        id="DP3"
+                        displayFormat="short"/>
+                <Label text="Availability"/>
+                <SegmentedButton selectedItem="inStock">
+                    <items>
+                        <SegmentedButtonItem text="In store" id="inStock"/>
+                        <SegmentedButtonItem text="In depot"/>
+                        <SegmentedButtonItem text="In repository"/>
+                        <SegmentedButtonItem text="Out of stock"/>
+                    </items>
+                </SegmentedButton>
+                <Label text="Size"/>
+                <Input/>
+                <ComboBox maxWidth="100px">
+                    <core:Item key="X" text="X"/>
+                    <core:Item key="Y" text="Y"/>
+                    <core:Item key="Z" text="Z"/>
+                </ComboBox>
+            </form:SimpleForm> -->
+        </WizardStep>
+        <WizardStep id="PricingStep"
+                    title="Link Flow"
+                    activate="onActivate">
+            <!-- <MessageStrip class="sapUiSmallMarginBottom"
+                    text="You can use the wizard previousStep() and nextStep() methods to navigate from step to step without validation. Also you can use the GoToStep(step) method to scroll programmatically to previously visited steps."
+                    showIcon="true"/>
+            <form:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout">
+                <Label text="Price"/>
+                <Input value="{/productPrice}"/>
+                <Label text="Discount group"/>
+                <MultiComboBox>
+                    <core:Item key="Kids" text="Kids"/>
+                    <core:Item key="Teens" text="Teens"/>
+                    <core:Item key="Adults" text="Adults"/>
+                    <core:Item key="Elderly" text="Elderly"/>
+                </MultiComboBox>
+                <Label text=" VAT is included"/>
+                <CheckBox selected="{/productVAT}"/>
+            </form:SimpleForm> -->
+        </WizardStep>
+        <WizardStep id="Product"
+                    title="Select Comparison Point"
+                    activate="onActivate">
+                    </WizardStep>
+                    <WizardStep id="ProductInf"
+                    title="Test Results"
+                    activate="onActivate">
+                     
+                        <Table id="testResultsTable" items="{/testResults}" class="sapUiSmallMargin table" >
+                            <columns>
+                                <Column>
+                                    <Label text="Created on"/>
+                                </Column>
+                                <Column>
+                                    <Label text="Message ID"/>
+                                </Column>
+                                <Column>
+                                    <Label text="Default Comparison Result"/>
+                                </Column>
+                                <Column>
+                                    <Label text=""/>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Text text="{createdOn}"/>
+                                        <Text text="{messageId}"/>
+                                        <ObjectStatus
+                                            text="{comparisonResult}"
+                                            state="{= ${comparisonResult} === 'OK' ? 'Success' : ${comparisonResult} === 'ERROR' ? 'Error' : 'None'}"
+                                            icon="{= ${comparisonResult} === 'OK' ? 'sap-icon://accept' : ${comparisonResult} === 'ERROR' ? 'sap-icon://decline' : ''}"
+                                        />
+                                        <HBox >
+                                        <Button icon="sap-icon://show" text="" press="onEdit" ></Button>
+                                        <Button class="sapUiSmallMarginBeginEnd"  press="onDelete" icon="sap-icon://detail-view" text=""></Button>
+                                        <Button icon="sap-icon://it-host" text="" press="onDuplicate"></Button>
+ 
+                                        </HBox>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                   
+ 
+ 
+                   
+                    </WizardStep>
+    </Wizard>
+
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                    </uxap:sections>
+                </uxap:ObjectPageLayout>
+                <footer>
+                    <Toolbar>
+                        <ToolbarSpacer />
+                        <Button
+                            text="Save"
+                            press="onSavePress"
+                        />
+                    </Toolbar>
+                </footer>
+            </Page>
+        </f:midColumnPages>
+
+          <f:endColumnPages>
+            <Page>
+                <uxap:ObjectPageLayout
+                    id="endPageLayout"
+                    showTitleInHeaderContent="true"
+                    alwaysShowContentHeader="false"
+                    preserveHeaderStateOnScroll="false"
+                    headerContentPinnable="true"
+                    isChildPage="true"
+                    upperCaseAnchorBar="false"
+                >
+                    <uxap:headerTitle>
+                        <uxap:ObjectPageDynamicHeaderTitle>
+                            <uxap:expandedHeading>
+                                <Title
+                                    text="{name}"
+                                    wrapping="true"
+                                    class="sapUiSmallMarginEnd"
+                                />
+                            </uxap:expandedHeading>
+                            <uxap:navigationActions>
+                                <OverflowToolbarButton
+                                    type="Transparent"
+                                    icon="sap-icon://full-screen"
+                                    press="handleFullScreen"
+                                    id="enterFullScreenBtnn"
+                                    tooltip="Enter Full Screen Mode"
+                                    visible="{= ${/actionButtonsInfo/midColumn/fullScreen} !== null }"
+                                />
+                                <OverflowToolbarButton
+                                    type="Transparent"
+                                    icon="sap-icon://exit-full-screen"
+                                    press="handleExitFullScreen"
+                                    id="exitFullScreenBtnn"
+                                    tooltip="Exit Full Screen Mode"
+                                    visible="{= ${/actionButtonsInfo/midColumn/exitFullScreen} !== null }"
+                                />
+                                <OverflowToolbarButton
+                                    type="Transparent"
+                                    icon="sap-icon://decline"
+                                    press="handleClose"
+                                    tooltip="Close middle column"
+                                    visible="{= ${/actionButtonsInfo/midColumn/closeColumn} !== null }"
+                                />
+                            </uxap:navigationActions>
+                        </uxap:ObjectPageDynamicHeaderTitle>
+                    </uxap:headerTitle>
+                    <uxap:sections>
+                        <uxap:ObjectPageSection title="MORE INFO">
+                            <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                    <uxap:blocks>
+                      
+
+                                    </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                            </uxap:subSections>
+                        </uxap:ObjectPageSection>
+                    </uxap:sections>
+                </uxap:ObjectPageLayout>
+                <footer>
+                    <Toolbar>
+                        <ToolbarSpacer />
+                        <Button
+                            text="Save"
+                            press="onSavePress"
+                        />
+                    </Toolbar>
+                </footer>
+            </Page>
+        </f:endColumnPages>
+        
+        
+    </f:FlexibleColumnLayout>
+
+
+  </Page>
+
+	
+</mvc:View>
